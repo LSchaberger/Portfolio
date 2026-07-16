@@ -13,6 +13,35 @@ entre enero de 2017 y abril de 2026.
 ==========================================================
 */
 
+/*
+==========================================================
+
+Índice de Consultas
+
+1. Evolución mensual de las ventas.
+
+1.1 Evolución anual de las ventas.
+
+1.2 Crecimiento anual de las ventas.
+
+1.3 Crecimiento acumulado de las ventas.
+
+2. Evolución de las ventas a precios constantes.
+
+2.1 Comparación entre ventas a precios corrientes y constantes.
+
+2.2 Crecimiento anual de las ventas a precios constantes.
+
+3. Mes con mayor y menor volumen de ventas.
+
+3.1 Año con mayor y menor volumen de ventas.
+
+3.2 Participación porcentual de cada año sobre el total de ventas.
+
+==========================================================
+*/
+
+-- Compatible con MySQL 8.x
 USE supermercados_db;
 
 
@@ -87,7 +116,7 @@ Un porcentaje positivo indica crecimiento respecto al año
 anterior, mientras que un porcentaje negativo representa
 una disminución de las ventas.
 
-ADVERTENCIA:
+Nota:
 **** El año 2026 no fue considerado para la comparación
 anual completa debido a que el conjunto de datos contiene
 información únicamente hasta el mes de abril, lo que podría

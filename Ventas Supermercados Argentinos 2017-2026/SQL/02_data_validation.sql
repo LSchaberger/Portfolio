@@ -12,6 +12,39 @@ de datos antes de comenzar el análisis exploratorio.
 ==========================================================
 */
 
+/*
+==========================================================
+
+Índice de Consultas
+
+1. Verificación de la cantidad de registros.
+
+2. Verificación de la estructura de la tabla.
+
+3. Verificación de valores nulos.
+
+4. Verificación de registros duplicados.
+
+5. Verificación del rango temporal.
+
+6. Verificación de valores negativos.
+
+7. Verificación de valores iguales a cero.
+
+8. Verificación de consistencia entre ventas por canal.
+
+9. Verificación de consistencia entre medios de pago.
+
+10. Verificación de consistencia entre grupos de artículos.
+
+11. Verificación de estadísticas descriptivas.
+
+12. Verificación de registros fuera del período esperado.
+
+==========================================================
+*/
+
+-- Compatible con MySQL 8.x
 USE supermercados_db;
 
 
