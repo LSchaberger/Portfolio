@@ -1,0 +1,22 @@
+# Variables de entorno
+.Renviron
+.env
+
+# Archivos de R
+.Rhistory
+.RData
+.Ruserdata
+
+# Configuración de RStudio
+.Rproj.user/
+
+# Archivos temporales
+*.log
+*.tmp
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de respaldo del editor
+*~
