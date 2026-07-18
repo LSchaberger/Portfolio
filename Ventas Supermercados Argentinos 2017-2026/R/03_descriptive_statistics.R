@@ -25,62 +25,40 @@
 # 6. Detección de valores atípicos.
 ############################################################
 
+
+library(dplyr)
+library(readr)
+library(moments)
+
+
+# Creación de la carpeta de resultados
+if (!dir.exists("results")) {
+  dir.create("results")
+}
+
+
 ventas_corrientes <- ventas_supermercados$ventas_precios_corrientes
 
 ############################################################
-# 1. Medidas de tendencia central
+# Estadísticas descriptivas
 ############################################################
 
-mean(ventas_corrientes)
+# Medidas de tendencia central
+media <- mean(ventas_corrientes)
+mediana <- median(ventas_corrientes)
 
-median(ventas_corrientes)
+# Medidas de dispersión
+desvio_estandar <- sd(ventas_corrientes)
+varianza <- var(ventas_corrientes)
+minimo <- min(ventas_corrientes)
+maximo <- max(ventas_corrientes)
+rango <- maximo - minimo
+rango_intercuartilico <- IQR(ventas_corrientes)
+coeficiente_variacion <- desvio_estandar / media * 100
 
-
-############################################################
-# 2. Medidas de dispersión
-############################################################
-
-#Desvío estándar
-sd(ventas_corrientes)
-
-#Varianza
-var(ventas_corrientes)
-
-#Rango
-range(ventas_corrientes)
-
-#Rango intercuartílico
-IQR(ventas_corrientes)
-
-#Coeficiente de variación
-sd(ventas_corrientes) / mean(ventas_corrientes) * 100
-
-
-############################################################
-# 3. Medidas de posición.
-############################################################
-
-#Cuartiles
-quantile(ventas_corrientes)
-
-#Deciles
-quantile(ventas_corrientes, probs = seq(0, 1, 0.1))
-
-#Percentiles
-quantile(ventas_corrientes, probs = c(.10,.25,.50,.75,.90,.95,.99))
-
-
-############################################################
-# 4. Medidas de forma.
-############################################################
-
-library(moments)
-
-#Asimetría
-skewness(ventas_corrientes)
-
-#Curtosis
-kurtosis(ventas_corrientes)
+# Medidas de forma
+asimetria <- skewness(ventas_corrientes)
+curtosis <- kurtosis(ventas_corrientes)
 
 
 ############################################################
@@ -139,11 +117,59 @@ outliers_registros <- ventas_supermercados |>
     ventas_precios_corrientes %in% outliers
   )
 
+
+
+############################################################
+# Tabla de estadísticas descriptivas
+############################################################
+
+descriptive_statistics <- tibble(
+  Statistic = c(
+    "Mean",
+    "Median",
+    "Standard Deviation",
+    "Variance",
+    "Minimum",
+    "Maximum",
+    "Range",
+    "Interquartile Range",
+    "Coefficient of Variation (%)",
+    "Skewness",
+    "Kurtosis"
+  ),
+  Value = c(
+    media,
+    mediana,
+    desvio_estandar,
+    varianza,
+    minimo,
+    maximo,
+    rango,
+    rango_intercuartilico,
+    coeficiente_variacion,
+    asimetria,
+    curtosis
+  )
+)
+
+
+
 ############################################################
 # Resultados
 ############################################################
+
+descriptive_statistics
 
 cat("Cantidad de valores atípicos:", cantidad_outliers, "\n")
 cat("Porcentaje de valores atípicos:", porcentaje_outliers, "%\n\n")
 
 outliers_registros
+
+
+
+# Exportación de las estadísticas descriptivas
+write_csv(
+  descriptive_statistics,
+  "results/descriptive_statistics.csv"
+)
+
