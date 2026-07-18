@@ -117,49 +117,27 @@ matriz_correlacion_redondeada
 # 6. Detección de valores atípicos
 #
 # Objetivo:
-# Identificar posibles valores atípicos en la variable
-# ventas_precios_corrientes mediante el criterio del rango
-# intercuartílico (IQR).
+# Identificar los valores atípicos de la variable
+# ventas_precios_corrientes mediante la regla de Tukey.
 ############################################################
 
-###################################################
-#Podría haberlo hecho de forma rápida con boxplot:
+# Valores atípicos según la regla de Tukey (1.5 × IQR)
+outliers <- boxplot.stats(ventas_corrientes)$out
 
-#"boxplot.stats(ventas_corrientes)"
-
-#pero preferí hacerlo manualmente para la ocasión.
-###################################################
-
-
-# Primer cuartil (Q1)
-Q1 <- quantile(ventas_corrientes, 0.25)
-
-# Tercer cuartil (Q3)
-Q3 <- quantile(ventas_corrientes, 0.75)
-
-# Rango intercuartílico (IQR)
-IQR_ventas <- IQR(ventas_corrientes)
-
-# Límite inferior
-limite_inferior <- Q1 - (1.5 * IQR_ventas)
-
-# Límite superior
-limite_superior <- Q3 + (1.5 * IQR_ventas)
-
-# Cantidad de valores atípicos detectados
-cantidad_outliers <- sum(
-  ventas_corrientes < limite_inferior |
-    ventas_corrientes > limite_superior
-)
+# Cantidad de valores atípicos
+cantidad_outliers <- length(outliers)
 
 # Porcentaje de valores atípicos
 porcentaje_outliers <- round(
-  (cantidad_outliers / length(ventas_corrientes)) * 100, 2)
+  cantidad_outliers / length(ventas_corrientes) * 100,
+  2
+)
 
-# Registros considerados valores atípicos
-outliers <- ventas_supermercados |>
-  filter(ventas_precios_corrientes < limite_inferior |
-      ventas_precios_corrientes > limite_superior)
+# Registros correspondientes a los valores atípicos
+outliers_registros <- ventas_supermercados |>
+  filter(
+    ventas_precios_corrientes %in% outliers
+  )
 
 ############################################################
 # Resultados
@@ -168,4 +146,4 @@ outliers <- ventas_supermercados |>
 cat("Cantidad de valores atípicos:", cantidad_outliers, "\n")
 cat("Porcentaje de valores atípicos:", porcentaje_outliers, "%\n\n")
 
-outliers
+outliers_registros
